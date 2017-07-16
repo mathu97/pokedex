@@ -9,17 +9,22 @@
 import UIKit
 import AVFoundation // Required when dealing with Audio
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
 
     @IBOutlet weak var collection: UICollectionView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var pokemon = [Pokemon]()
+    var filteredPokemon = [Pokemon]()
     var musicPlayer: AVAudioPlayer!
-    
+    var inSearchMode = false
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         collection.dataSource = self
         collection.delegate = self
+        searchBar.delegate = self
+        
         parsePokemonCSV()
         initAudio()
     }
@@ -62,10 +67,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PokeCell", for: indexPath) as? PokeCell{
-            let poke = pokemon[indexPath.row]
-            cell.configureCell(poke)
+            
+            let poke : Pokemon!
+            
+            if inSearchMode {
+                poke = filteredPokemon[indexPath.row]
+                cell.configureCell(poke)
+            } else {
+                poke = pokemon[indexPath.row]
+                cell.configureCell(poke)
+            }
             
             return cell
+        
         } else {
             return UICollectionViewCell()
         }
@@ -84,12 +98,38 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        //This will be called, everytime we make a keystroke in the searchbar
+        
+        if searchBar.text == nil ||  searchBar.text == "" {
+            
+            inSearchMode = false
+            //If there was nothing in the search bar, or if we deleted what we had, then we should revert back to the original
+            collection.reloadData()
+            
+        } else {
+            inSearchMode = true
+            
+            let lower = searchBar.text!.lowercased()
+            
+            filteredPokemon = pokemon.filter({$0.name.range(of: lower) != nil})
+            //$0 can be viewed as a place holder for  all the objects in the pokemon array
+            
+            collection.reloadData()
+        }
+        
+    }
+        
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if inSearchMode {
+            return filteredPokemon.count
+        }
+        
         return pokemon.count
     }
     
