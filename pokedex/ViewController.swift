@@ -25,6 +25,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         collection.delegate = self
         searchBar.delegate = self
         
+        searchBar.returnKeyType = UIReturnKeyType.done // Change the "Search" on keyboard to "Done"
+        
         parsePokemonCSV()
         initAudio()
     }
@@ -98,6 +100,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        view.endEditing(true)
+    
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         //This will be called, everytime we make a keystroke in the searchbar
         
@@ -107,6 +115,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             //If there was nothing in the search bar, or if we deleted what we had, then we should revert back to the original
             collection.reloadData()
             
+            view.endEditing(true) //Hide the keyboard
+        
         } else {
             inSearchMode = true
             
@@ -119,7 +129,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         
     }
-        
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
