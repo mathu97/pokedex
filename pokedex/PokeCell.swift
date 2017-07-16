@@ -15,7 +15,14 @@ class PokeCell: UICollectionViewCell {
     
     var pokemon: Pokemon!
     
-    func configureCell(pokemon: Pokemon){
+    required init?(coder aDecoder:NSCoder){
+        //Adding rounded corners to the Collection View Cell
+        super.init(coder: aDecoder)
+        
+        layer.cornerRadius = 5.0
+    }
+    
+    func configureCell(_ pokemon: Pokemon){
         
         self.pokemon = pokemon
         
