@@ -141,16 +141,17 @@
                     <connections>
                         <outlet property="collection" destination="RU1-2y-cqo" id="qR7-1g-ZZw"/>
                         <outlet property="searchBar" destination="Lrj-rf-76d" id="Aox-t9-uRR"/>
+                        <segue destination="moZ-io-dcl" kind="show" identifier="PokemonDetailVC" id="QWu-IG-2Dl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="117.59999999999999" y="122.78860569715144"/>
+            <point key="canvasLocation" x="-10" y="123"/>
         </scene>
-        <!--View Controller-->
+        <!--Pokemon DetailVC-->
         <scene sceneID="9Re-He-f7h">
             <objects>
-                <viewController id="moZ-io-dcl" sceneMemberID="viewController">
+                <viewController id="moZ-io-dcl" customClass="PokemonDetailVC" customModule="pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JJ9-Bb-wZM"/>
                         <viewControllerLayoutGuide type="bottom" id="Vqz-Vn-gCZ"/>
@@ -158,12 +159,24 @@
                     <view key="view" contentMode="scaleToFill" id="FKf-yh-eU6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gND-oZ-RPH">
+                                <rect key="frame" x="52" y="300" width="271" height="66"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.42668470609999998" green="0.7640135213" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <connections>
+                        <outlet property="nameLbl" destination="gND-oZ-RPH" id="rgs-pA-F6E"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DIH-3X-soc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="807" y="123"/>
+            <point key="canvasLocation" x="805.60000000000002" y="122.78860569715144"/>
         </scene>
     </scenes>
     <resources>
