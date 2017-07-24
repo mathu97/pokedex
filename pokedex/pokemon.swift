@@ -20,6 +20,7 @@ class Pokemon{
     private var _attack: String!
     private var _nextEvolutionText: String!
     
+    private var _pokemonURL: String!
     
     var name: String{
         
@@ -30,8 +31,19 @@ class Pokemon{
         return _pokedexId
     }
     
+    
     init(name: String, pokedexId: Int){
+        
         self._name = name
         self._pokedexId = pokedexId
+        
+        self._pokemonURL = "\(URL_BASE)\(URL_POKEMON)\(self._pokedexId)/"
+        
+        
+    }
+    
+    func downloadPokemonDetail(completed: DownloadComplete){
+        
+        
     }
 }
