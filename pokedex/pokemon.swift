@@ -55,6 +55,14 @@ class Pokemon{
         return _weight
     }
     
+    var height: String {
+        if _height == nil {
+            _height = ""
+        }
+        
+        return _height
+    }
+    
     var defense: String {
         if _defense == nil {
             _defense = ""
@@ -90,7 +98,7 @@ class Pokemon{
         
     }
     
-    func downloadPokemonDetail(completed: DownloadComplete){
+    func downloadPokemonDetail(completed: @escaping DownloadComplete){
         
         Alamofire.request(self._pokemonURL).responseJSON { (response) in
             if let dict = response.result.value as? Dictionary<String, AnyObject>{
@@ -116,13 +124,10 @@ class Pokemon{
                     }
                     
                 }
-                
-//                print(self._weight)
-//                print(self._height)
-//                print(self._attack)
-//                print(self._defense)
             }
             
+            completed()
         }
+        
     }
 }

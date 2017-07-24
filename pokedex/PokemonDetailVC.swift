@@ -36,6 +36,14 @@ class PokemonDetailVC: UIViewController {
     }
 
     func updateUI(){
+        descriptionLbl.text = pokemon.description
+        typeLbl.text = pokemon.type
+        defenseLbl.text = pokemon.defense
+        heightLbl.text = pokemon.height
+        weightLbl.text = pokemon.weight
+        attackLbl.text = pokemon.attack
+        pokedexLbl.text = "\(pokemon.pokedexId)"
+        nameLbl.text = pokemon.name
         
     }
     @IBAction func backBtnPressed(_ sender: Any) {
