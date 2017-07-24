@@ -20,16 +20,63 @@ class Pokemon{
     private var _weight: String!
     private var _attack: String!
     private var _nextEvolutionText: String!
-    
     private var _pokemonURL: String!
     
-    var name: String{
+    var name: String {
         
         return _name
     }
     
-    var pokedexId: Int{
+    var pokedexId: Int {
         return _pokedexId
+    }
+    
+    var nextEvolutionText: String {
+        if _nextEvolutionText == nil {
+            _nextEvolutionText = ""
+        }
+        
+        return _nextEvolutionText
+    }
+    
+    var attack: String {
+        if _attack == nil {
+            _attack = ""
+        }
+        
+        return _attack
+    }
+    
+    var weight: String {
+        if _weight == nil {
+            _weight = ""
+        }
+        
+        return _weight
+    }
+    
+    var defense: String {
+        if _defense == nil {
+            _defense = ""
+        }
+        
+        return _defense
+    }
+    
+    var type: String {
+        if _type == nil {
+            _type = ""
+        }
+        
+        return _type
+    }
+    
+    var description: String {
+        if _description == nil {
+            _description = ""
+        }
+        
+        return _description
     }
     
     
@@ -70,10 +117,10 @@ class Pokemon{
                     
                 }
                 
-                print(self._weight)
-                print(self._height)
-                print(self._attack)
-                print(self._defense)
+//                print(self._weight)
+//                print(self._height)
+//                print(self._attack)
+//                print(self._defense)
             }
             
         }
