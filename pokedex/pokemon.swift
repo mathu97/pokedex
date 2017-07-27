@@ -99,7 +99,6 @@ class Pokemon{
     }
     
     func downloadPokemonDetail(completed: @escaping DownloadComplete){
-        
         Alamofire.request(self._pokemonURL).responseJSON { (response) in
             if let dict = response.result.value as? Dictionary<String, AnyObject>{
                 
@@ -124,6 +123,28 @@ class Pokemon{
                     }
                     
                 }
+                
+                if let types = dict["types"] as? [Dictionary<String, AnyObject>], types.count > 0{
+                    if let typeDict = types[0]["type"] as? Dictionary<String,AnyObject> {
+                        if let name = typeDict["name"] as? String {
+                            self._type = name.capitalized
+                        }
+                    }
+                    
+                    if types.count > 1 {
+                        for x in 1..<types.count {
+                            if let typeDict = types[x]["type"] as? Dictionary<String,AnyObject> {
+                                if let name = typeDict["name"] as? String {
+                                    self._type! += "/\(name.capitalized)"
+                                }
+                            }
+                        }
+                    }
+                    
+                } else {
+                    self._type = ""
+                }
+                
             }
             
             completed()
