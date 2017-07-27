@@ -95,7 +95,7 @@ class Pokemon{
         self._pokedexId = pokedexId
         
         self._pokemonURL = "\(URL_BASE)\(URL_POKEMON)\(self._pokedexId!)/"
-        self._pokemonInfoURL = "\(URL_BASE)\(URL_POKE_DESCRIPTION)\(self._pokedexId)"
+        self._pokemonInfoURL = "\(URL_BASE)\(URL_POKE_DESCRIPTION)\(self._pokedexId!)"
         
     }
     
@@ -147,10 +147,10 @@ class Pokemon{
                 }
                 
                 //Get the pokemon description from a different endpoint
+                print(self._pokemonInfoURL)
                 Alamofire.request(self._pokemonInfoURL).responseJSON(completionHandler: { (response) in
                     if let tempDict = response.result.value as? Dictionary<String, AnyObject>{
                         if let flavourTextEntries = tempDict["flavor_text_entries"] as? [Dictionary<String, AnyObject>]{
-                            
                             for entries in flavourTextEntries {
                                 
                                 // Go through each entry and find the "english entry"
@@ -158,14 +158,19 @@ class Pokemon{
                                     
                                     if languageDict["name"] as? String == "en" {
                                         if let description = entries["flavor_text"] as? String {
+                                            
                                             self._description = description
                                         }
                                     }
                                     
                                 }
+                                
                             }
+                            
                         }
                     }
+                    
+                    completed()
                 })
                 
             }
