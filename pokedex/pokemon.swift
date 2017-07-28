@@ -25,7 +25,6 @@ class Pokemon{
     private var _nextEvolutionLevel: String!
     private var _pokemonURL: String!
     private var _pokemonInfoURL: String!
-    private var _pokemonEvolutionURL: String!
     
     var name: String {
         
@@ -124,7 +123,6 @@ class Pokemon{
         
         self._pokemonURL = "\(URL_BASE)\(URL_POKEMON)\(self._pokedexId!)/"
         self._pokemonInfoURL = "\(URL_BASE)\(URL_POKE_DESCRIPTION)\(self._pokedexId!)"
-        self._pokemonEvolutionURL = "\(URL_BASE)\(URL_POKE_EVOLUTION)\(self._pokedexId!)"
         
     }
     
@@ -197,65 +195,77 @@ class Pokemon{
                             }
                             
                         }
-                    }
-                    
-                    completed()
-                })
-                
-                Alamofire.request(self._pokemonEvolutionURL).responseJSON(completionHandler: { (response) in
-                    if let evolDict = response.result.value as? Dictionary<String, AnyObject> {
                         
-                        if let evolutionChain = evolDict["chain"] as? Dictionary<String, AnyObject> {
+                        if let evolChain = tempDict["evolution_chain"] as? Dictionary<String, String> {
                             
-                            if let firstEvolution = evolutionChain["evolves_to"] as? [Dictionary<String, AnyObject>] {
-
-                                    
-                                    if let evolDetails = firstEvolution[0]["evolution_details"] as? [Dictionary<String, AnyObject>] {
+                            if let evolURL = evolChain["url"] {
+                                
+                                //get the evolution information 
+                                
+                                Alamofire.request(evolURL).responseJSON(completionHandler: { (response) in
+                                    if let evolDict = response.result.value as? Dictionary<String, AnyObject> {
                                         
-                                        if let minLvl = evolDetails[0]["min_level"] as? Int {
+                                        if let evolutionChain = evolDict["chain"] as? Dictionary<String, AnyObject> {
                                             
-                                            self._nextEvolutionLevel = "\(minLvl)"
-
+                                            if let firstEvolution = evolutionChain["evolves_to"] as? [Dictionary<String, AnyObject>] {
+                                                
+                                                
+                                                if let evolDetails = firstEvolution[0]["evolution_details"] as? [Dictionary<String, AnyObject>] {
+                                                    
+                                                    if let minLvl = evolDetails[0]["min_level"] as? Int {
+                                                        
+                                                        self._nextEvolutionLevel = "\(minLvl)"
+                                                        
+                                                        
+                                                    } else {
+                                                        self._nextEvolutionLevel = ""
+                                                    }
+                                                    
+                                                    
+                                                    
+                                                    if let species = firstEvolution[0]["species"] as? Dictionary<String, String> {
+                                                        
+                                                        if let evolutionName = species["name"] {
+                                                            self._nextEvolutionName = evolutionName
+                                                        } else {
+                                                            self._nextEvolutionName = ""
+                                                        }
+                                                        
+                                                        if let evolutionURL = species["url"] {
+                                                            
+                                                            let newStr = evolutionURL.replacingOccurrences(of: "http://pokeapi.co/api/v2/pokemon-species/", with: "")
+                                                            let nextEvoId = newStr.replacingOccurrences(of: "/", with: "")
+                                                            
+                                                            self._nextEvolutionId = nextEvoId
+                                                        } else {
+                                                            self._nextEvolutionId = ""
+                                                        }
+                                                        
+                                                    }
+                                                    
+                                                }
+                                                
+                                            }
                                             
-                                        } else {
-                                            self._nextEvolutionLevel = ""
                                         }
                                         
-                            
-                                    
-                                    if let species = firstEvolution[0]["species"] as? Dictionary<String, String> {
-                                        
-                                        if let evolutionName = species["name"] {
-                                            self._nextEvolutionName = evolutionName
-                                        } else {
-                                            self._nextEvolutionName = ""
-                                        }
-                                        
-                                        if let evolutionURL = species["url"] {
-                                            
-                                            let newStr = evolutionURL.replacingOccurrences(of: "http://pokeapi.co/api/v2/pokemon-species/", with: "")
-                                            let nextEvoId = newStr.replacingOccurrences(of: "/", with: "")
-                                            
-                                            self._nextEvolutionId = nextEvoId
-                                        } else {
-                                            self._nextEvolutionId = ""
-                                        }
-                                        
+                                        print(self._nextEvolutionLevel)
+                                        print(self._nextEvolutionName)
+                                        print(self._nextEvolutionId)
                                     }
                                     
-                                }
+                                    completed()
+                                })
                                 
                             }
                             
                         }
-                        
-                        print(self._nextEvolutionLevel)
-                        print(self._nextEvolutionName)
-                        print(self._nextEvolutionId)
                     }
                     
                     completed()
                 })
+
+
                 
 
             }
