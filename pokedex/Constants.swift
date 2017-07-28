@@ -11,6 +11,7 @@ import Foundation
 let URL_BASE = "http://pokeapi.co"
 let URL_POKEMON = "/api/v2/pokemon/"
 let URL_POKE_DESCRIPTION = "/api/v2/pokemon-species/"
+let URL_POKE_EVOLUTION = "/api/v2/evolution-chain/"
 
 //Create a closure
 typealias DownloadComplete = () -> ()
