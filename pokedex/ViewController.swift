@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation // Required when dealing with Audio
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
-
+    
     @IBOutlet weak var collection: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -18,7 +18,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var filteredPokemon = [Pokemon]()
     var musicPlayer: AVAudioPlayer!
     var inSearchMode = false
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collection.dataSource = self
@@ -66,7 +66,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             print(err.debugDescription)
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PokeCell", for: indexPath) as? PokeCell{
             
@@ -81,7 +81,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             }
             
             return cell
-        
+            
         } else {
             return UICollectionViewCell()
         }
@@ -93,17 +93,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             musicPlayer.pause()
             sender.alpha = 0.2  //When paused make the button transparent
         }else{
-        
+            
             musicPlayer.play()
             sender.alpha = 1.0 // When playing make the button opaque
-        
+            
         }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         view.endEditing(true)
-    
+        
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -116,7 +116,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             collection.reloadData()
             
             view.endEditing(true) //Hide the keyboard
-        
+            
         } else {
             inSearchMode = true
             
@@ -175,6 +175,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
     }
     
-
+    
 }
 
