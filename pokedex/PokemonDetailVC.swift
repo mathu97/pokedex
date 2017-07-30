@@ -51,6 +51,14 @@ class PokemonDetailVC: UIViewController {
         attackLbl.text = pokemon.attack
         nameLbl.text = pokemon.name
         
+        if pokemon.nextEvolutionId == "" {
+            evoLbl.text = "No Evolutions"
+            nextEvoImg.isHidden = true
+        } else {
+            nextEvoImg.isHidden = false
+            nextEvoImg.image = UIImage(named: pokemon.nextEvolutionId)
+        }
+        
     }
     @IBAction func backBtnPressed(_ sender: Any) {
         
